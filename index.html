@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperlink Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .anchor-section {
+            background-color: #e0f7fa;
+        }
+        .link-section {
+            background-color: #f1f8e9;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        textarea {
+            resize: none;
+            height: 60px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Hyperlink Code with Anchor Generator</h2>
+    </header>
+
+    <div class="container">
+        <div class="section anchor-section">
+            <label for="anchorText">Enter Anchor Text:</label>
+            <input type="text" id="anchorText" placeholder="Enter your text here...">
+            
+            <label for="predefinedTexts">Or Select Anchor Text:</label>
+            <select id="predefinedTexts" onchange="updateAnchorText()">
+                <option value="">Select from the list...</option>
+                <option value="mcdelivery">mcdelivery</option>
+                <option value="Michael">Michael</option>
+                <option value="Michael Cisinero">Michael Cisinero</option>
+                <option value="Michael Cisinero Food Blogger">Michael Cisinero Food Blogger</option>
+                <option value="price list">price list</option>
+                <option value="click here">click here</option>
+                <option value="mcdo menu">mcdo menu</option>
+                <option value="mcdo menu price list">mcdo menu price list</option>
+                <option value="McDonald's Philippines">McDonald's Philippines</option>
+            </select>
+        </div>
+
+        <div class="section link-section">
+            <label for="linkOptions">Select Link:</label>
+            <select id="linkOptions" onchange="updateLink()">
+                <option value="https://www.google.com">Google Home Page</option>
+                <option value="https://www.facebook.com">Facebook Home Page</option>
+                <option value="https://mcdomenu.com.ph/">McDo Menu Prices</option>
+            </select>
+
+            <label for="customLink">Or Enter Your Own Link:</label>
+            <input type="text" id="customLink" placeholder="Enter your URL here...">
+        </div>
+
+        <button onclick="generateLink()">Generate Link</button>
+        
+        <label for="output">Generated Hyperlink:</label>
+        <textarea id="output" readonly></textarea>
+        <button onclick="copyToClipboard()">Copy</button>
+    </div>
+
+    <script>
+        function updateAnchorText() {
+            const predefinedText = document.getElementById('predefinedTexts').value;
+            document.getElementById('anchorText').value = predefinedText;
+        }
+
+        function updateLink() {
+            const linkSelect = document.getElementById('linkOptions').value;
+            document.getElementById('customLink').value = linkSelect;
+        }
+
+        function generateLink() {
+            const anchorText = document.getElementById('anchorText').value;
+            let customLink = document.getElementById('customLink').value;
+            if (!customLink) {
+                customLink = document.getElementById('linkOptions').value;
+            }
+            const hyperlink = `<a href="${customLink}">${anchorText}</a>`;
+            document.getElementById('output').value = hyperlink;
+        }
+
+        function copyToClipboard() {
+            const outputField = document.getElementById('output');
+            outputField.select();
+            outputField.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+        }
+    </script>
+</body>
+</html>
